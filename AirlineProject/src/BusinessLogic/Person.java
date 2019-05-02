@@ -16,6 +16,11 @@ public class Person {
 	public Person() {
 		
 	}
+	
+	public Person(String username) {
+		
+	}
+	
 	public Person(String userName, String password) {
 		this.userName = userName;
 		this.password = password;

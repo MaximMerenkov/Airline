@@ -79,6 +79,7 @@ public class AirlineLogin extends Application {
 	
 	Button register = new Button("Register");
 	Button recoverPass = new Button("Forgot Password");
+	recoverPass.setOnAction(e -> ForgotPassword.display("Recover Password", "Enter username"));
 	centerMenu.getChildren().addAll(userName, txtName, password, txtPassword,log_in,register,recoverPass);
 	centerMenu.setMargin(log_in, new Insets(20));
 	centerMenu.setMargin(recoverPass, new Insets(10));
