@@ -305,7 +305,9 @@ public class DatabaseConnector {
 		}
 		
 }
-public static void deleteBooking(Data data) throws Exception {
+    // Customer option to cancel reservation, also runs query to add available seat back
+    
+    public static void deleteBooking(Data data) throws Exception {
 	String databaseURL = "jdbc:mysql://localhost:3306/project?autoReconnect=true&useSSL=false";
 	String databaseUser = "root";
 	String databasePass = "Westsmyrna-2020";
@@ -339,11 +341,65 @@ public static void deleteBooking(Data data) throws Exception {
 		
 		
 		connection.close();
+  }
+    // Admin option to delete flight from the system
+    public static void deleteFlight(Data data) throws Exception {
+    	String databaseURL = "jdbc:mysql://localhost:3306/project?autoReconnect=true&useSSL=false";
+    	String databaseUser = "root";
+    	String databasePass = "Westsmyrna-2020";
+    	
+    	
+    		//loads the driver to connect to the database
+    		
+    		Connection connection = DriverManager.getConnection(databaseURL, databaseUser, databasePass);
+    		String sqlQuery = " DELETE  FROM flight WHERE flightId = ? AND departureCity = ? AND departureDate = ? AND departureTime = ? AND "
+    				                                       + "arrivalCity = ? AND basicPrice = ? AND availableSeats = ? ";
+    		PreparedStatement statement = connection.prepareStatement(sqlQuery);
+    		statement.setInt(1, data.getFlight().getFlightId());
+    		statement.setString(2, data.getFlight().getDepartureCity());
+    		statement.setString(3, data.getFlight().getDepartureDate());
+    		statement.setString(4, data.getFlight().getDepartureTime());
+    		statement.setString(5, data.getFlight().getArrivalCity());
+    		statement.setString(6, data.getFlight().getBasicPrice());
+    		statement.setInt(7, data.getFlight().getAvailableSeats());
+    		statement.executeUpdate();
+
+    		connection.close();
+    }
+    
+    
+    public static void addFlight(Data data) throws Exception {
+		
+		String databaseURL = "jdbc:mysql://localhost:3306/project?autoReconnect=true&useSSL=false";
+		String databaseUser = "root";
+		String databasePass = "Westsmyrna-2020";
+		
+		
+			//loads the driver to connect to the database
+			
+			Connection connection = DriverManager.getConnection(databaseURL, databaseUser, databasePass);
+			String sqlQuery = "INSERT INTO flight (flightId, departureCity, departureDate, departureTime, arrivalCity, basicPrice, availableSeats) VALUES(?,?,?,?,?,?,?)";
+			PreparedStatement statement = connection.prepareStatement(sqlQuery);
+			statement.setInt(1, data.getFlight().getFlightId()); 
+			statement.setString(2, data.getFlight().getDepartureCity()); 
+			statement.setString(3, data.getFlight().getDepartureDate());
+			statement.setString(4, data.getFlight().getDepartureTime());
+			statement.setString(5, data.getFlight().getArrivalCity());
+			statement.setString(6, data.getFlight().getBasicPrice());
+			statement.setInt(7, data.getFlight().getAvailableSeats());
+			
+			
+			statement.executeUpdate();
+			connection.close();
+			
+	}
+
 }
 
 
 
 
-}
+
+
 
 

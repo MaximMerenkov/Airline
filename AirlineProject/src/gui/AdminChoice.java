@@ -239,16 +239,51 @@ public class AdminChoice extends Application {
 	        Button deleteButton = new Button("Delete Flight");
 	        deleteButton.setMaxWidth(200);
 	        GridPane.setConstraints(deleteButton, 1, 10);
+	        deleteButton.setOnAction(e -> {
+	        	Flight selectedFlight = (Flight) table1.getSelectionModel().getSelectedItem();
+	        	Data dat = new Data();
+	    		dat.setFlight(selectedFlight);
+	    		
+	    		DatabaseConnector obj = new DatabaseConnector();
+	    		try {
+					obj.deleteFlight(dat);
+					table1.getItems().remove(selectedFlight);
+				} catch (Exception e1) {
+					AlertBox.display("OOOPS", "There is a problem please try again");
+					e1.printStackTrace();
+				}
+	    		
+	        });
 	        
 	        
+	        
+	        // Admin option to add new flight
 	        Button addButton = new Button("Add Flight");
-	        deleteButton.setMaxWidth(200);
+	        addButton.setMaxWidth(200);
 	        GridPane.setConstraints(addButton, 1, 11);
+	        addButton.setOnAction(e -> {
+	        	Flight destination = new Flight(Integer.parseInt(flightIdTxt.getText()), depCity.getValue(), lbl.getText(),
+	        			                           depTime.getValue(), arrCity.getValue(), basePrice.getText(),
+	        			                           Integer.parseInt(remSeats.getText()));
+	        	Data wrapper = new Data();
+	        	wrapper.setFlight(destination);
+	        	DatabaseConnector obj = new DatabaseConnector();
+	        	try {
+					obj.addFlight(wrapper);
+				} catch (Exception e1) {
+					AlertBox.display("WARNING", "Cant add flight");
+					e1.printStackTrace();
+				}
+	        });
+	        
+	        Button updateButton = new Button("Update Flight");
+	        updateButton.setMaxWidth(200);
+	        GridPane.setConstraints(updateButton, 1, 12);
 	                    
 	        Button backButton = new Button("Main menu");
 	        backButton.setMaxWidth(200);
 	        
-	        GridPane.setConstraints(backButton, 1, 12);
+	        GridPane.setConstraints(backButton, 1, 13);
 	        backButton.setOnAction(event -> {
 	    		AirlineLogin window = new AirlineLogin();
 	    		try {
@@ -261,7 +296,7 @@ public class AdminChoice extends Application {
 	        
 	        Button bookedButton = new Button("Booked flights");
 	        bookedButton.setMaxWidth(200);
-	        GridPane.setConstraints(bookedButton, 1, 13);
+	        GridPane.setConstraints(bookedButton, 1, 14);
 	        bookedButton.setOnAction(e -> {
 	        	BookedFlights bookedFlights = new BookedFlights();
 	        	try {
@@ -279,7 +314,7 @@ public class AdminChoice extends Application {
 	        adminTools.setAlignment(Pos.CENTER);
 	        adminTools.getChildren().addAll(findFlightText ,departCity, depCity, toCity,arrCity, datePicker, dp,
 	        		                        deparTime,depTime, bP,basePrice, seatLeft,remSeats,flightIdLabel,
-	        		                        flightIdTxt, searchButton, bookButton, deleteButton, addButton, bookedButton, backButton);
+	        		                        flightIdTxt, searchButton, bookButton, deleteButton, addButton, updateButton, bookedButton, backButton);
 	        /* Not used
 	        VBox adminTools = new VBox();
 	        adminTools.setPadding(new Insets(10,10,10,10));
