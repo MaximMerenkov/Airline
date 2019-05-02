@@ -1,0 +1,31 @@
+.root{
+    -fx-background-color:#D8D8D8;
+}
+.button {
+  -fx-background-color: #7cafc2;
+  -fx-webkit-transition-duration: 0.4s; /* Safari */
+  -fx-transition-duration: 0.4s;
+  -fx-text-fill: #FFFFFF;
+  -fx-background-radius: 4;
+  -fx-font-weight: bold;
+}
+.button:hover{
+
+    -fx-background-color: #483D8B ;
+  
+    -fx-text-fill: #FFFFFF;
+    -fx-background-radius: 4;
+    -fx-font-weight: bold;
+    
+}
+
+.label{
+    
+    -fx-font-weight: bold;
+}
+#Security-question {
+    -fx-background-color: #7cafc2;
+    -fx-text-fill: #FFFFFF;
+    -fx-background-radius: 4;
+   
+}
