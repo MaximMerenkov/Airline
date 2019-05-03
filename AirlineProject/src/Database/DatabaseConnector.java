@@ -385,7 +385,7 @@ public static void deleteFlight(Data data) throws Exception {
     	connection.close();
 }
 
-public static String getSecurityQuestion(Data data) throws Exception {
+public static String getSecurityQuestion(String userName) throws Exception {
 	String databaseURL = "jdbc:mysql://localhost:3306/project?autoReconnect=true&useSSL=false";
 	String databaseUser = "root";
 	String databasePass = "Westsmyrna-2020";
@@ -396,10 +396,11 @@ public static String getSecurityQuestion(Data data) throws Exception {
 	
 	String sqlQuery = "SELECT question FROM users WHERE username = ?";
 	PreparedStatement pStatement = connection.prepareStatement(sqlQuery);
-	pStatement.setString(1, data.getPerson().getUserName());
+	pStatement.setString(1, userName);
 	ResultSet rs = pStatement.executeQuery();
 	while (rs.next()) {
 		secQuest = rs.getString("question");
+		System.out.println(secQuest);
 	}
 	
 	
@@ -407,5 +408,27 @@ public static String getSecurityQuestion(Data data) throws Exception {
 	return secQuest;
 }
 
+public static String getPassword(String userName) throws Exception {
+	String databaseURL = "jdbc:mysql://localhost:3306/project?autoReconnect=true&useSSL=false";
+	String databaseUser = "root";
+	String databasePass = "Westsmyrna-2020";
+	
+	Connection connection = DriverManager.getConnection(databaseURL, databaseUser, databasePass);
+	
+	String userPass = "";
+	
+	String sqlQuery = "SELECT password FROM users WHERE username = ?";
+	PreparedStatement pStatement = connection.prepareStatement(sqlQuery);
+	pStatement.setString(1, userName);
+	ResultSet rs = pStatement.executeQuery();
+	while (rs.next()) {
+		userPass = rs.getString("password");
+		System.out.println(userPass);
+	}
+	
+	
+	
+	return userPass;
+}
 
 }

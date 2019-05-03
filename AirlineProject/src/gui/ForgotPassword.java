@@ -31,14 +31,11 @@ public class ForgotPassword {
 		
 		Button getSecQuest = new Button("Get Security Question");
 		getSecQuest.setOnAction(e -> {
-			Person p = new Person(txtName.getText());
 			currentUser = txtName.getText();
-			Data d = new Data();
-			d.setPerson(p);
 			DatabaseConnector obj = new DatabaseConnector();
 			try {
 			AlertBox.display("Your security question is:", 
-					obj.getSecurityQuestion(d));
+					obj.getSecurityQuestion(currentUser));
 			}
 			catch (Exception ex) {
 				System.out.println("Something went wrong");
@@ -49,12 +46,21 @@ public class ForgotPassword {
 		Label submitSecAnswer = new Label();
 		submitSecAnswer.setText("Enter answer for security question");
 		TextField txtSecAnswer = new TextField();
-		// submitSecAnswer.setOnAction(e -> )
 		txtSecAnswer.setMaxWidth(150);
 		
 		
 		Button submitButton = new Button("Submit");
-		// submitButton.setOnAction();
+		submitButton.setOnAction(e -> {
+				currentUser = txtName.getText();
+				DatabaseConnector obj = new DatabaseConnector();
+				try {
+				AlertBox.display("Your password is:", 
+						obj.getPassword(currentUser));
+				}
+				catch (Exception ex) {
+					System.out.println("Something went wrong");
+				}
+				});
 		submitButton.setMaxWidth(150);
 		
 		Button closeButton = new Button("Close the Window");
