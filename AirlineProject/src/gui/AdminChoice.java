@@ -222,8 +222,11 @@ public class AdminChoice extends Application {
 	        	Flight selectedFlight = (Flight) table1.getSelectionModel().getSelectedItem();
 	        	Data dat = new Data();
 	    		dat.setFlight(selectedFlight);
-	    		System.out.println(selectedFlight.getFlightId());
-	    		
+	    		if(dat.getFlight().getAvailableSeats() == 0) {
+	    			AlertBox.display("SORRY", "This flight is fully booked");
+	    		}
+	    		//System.out.println(selectedFlight.getFlightId());
+	    		else {
 	    		DatabaseConnector obj = new DatabaseConnector();
 	    		try {
 					obj.addBooking(dat);
@@ -232,7 +235,7 @@ public class AdminChoice extends Application {
 					e1.printStackTrace();
 				}
 	    		
-	    		
+	    		}
 	        	
 	        });
 	        

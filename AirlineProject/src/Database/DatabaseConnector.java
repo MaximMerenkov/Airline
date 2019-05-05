@@ -309,8 +309,8 @@ public class DatabaseConnector {
 			String databasePass = "Westsmyrna-2020";
 			
 			Connection connection = DriverManager.getConnection(databaseURL, databaseUser, databasePass);
-			String sqlQuery = "UPDATE flight SET departureCity = ? AND departureDate = ? AND departureTime = ? "
-					                     + "AND arrivalCity = ? AND basicPrice = ? AND availableSeats = ?  WHERE flightId = ?";
+			String sqlQuery = "UPDATE flight SET departureCity = ? , departureDate = ?, departureTime = ?, "
+					                     + " arrivalCity = ? , basicPrice = ? , availableSeats = ?  WHERE flightId = ?";
 			
 			PreparedStatement statement = connection.prepareStatement(sqlQuery);
 			statement.setString(1, data.getFlight().getDepartureCity());

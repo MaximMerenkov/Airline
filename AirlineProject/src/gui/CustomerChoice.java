@@ -189,7 +189,7 @@ public class CustomerChoice extends Application {
 	    			AlertBox.display("SORRY", "This flight is fully booked");
 	    		}
 	    		//System.out.println(selectedFlight.getFlightId());
-	    		
+	    		else {
 	    		DatabaseConnector obj = new DatabaseConnector();
 	    		
 				try {
@@ -199,7 +199,7 @@ public class CustomerChoice extends Application {
 					e1.printStackTrace();
 				}
 				
-	    		
+	    		}
 	        	
 	        });
 	                    
