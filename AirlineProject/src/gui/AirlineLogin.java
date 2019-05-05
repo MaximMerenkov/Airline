@@ -35,7 +35,7 @@ import javafx.stage.Stage;
 
 
 public class AirlineLogin extends Application {
-	//Take it out when strart from Splash
+	//Take it out when start from Splash
 	public static String currentUser = "";
   
   public static void main(String[] args) { 
@@ -72,7 +72,7 @@ public class AirlineLogin extends Application {
 	txtName.setMaxWidth(150);
 	Label password = new Label();
 	password.setMaxWidth(150);
-	TextField txtPassword = new TextField();
+	PasswordField txtPassword = new PasswordField();
 	txtPassword.setPromptText("Enter password");
 	txtPassword.setMaxWidth(150);
 	Button log_in = new Button("Log In");
@@ -140,7 +140,7 @@ public class AirlineLogin extends Application {
 	//* Set one size for all nodes and adjust layout alignment
 	log_in.setMaxWidth(150);
 	register.setMaxWidth(150);
-	recoverPass.setMaxWidth(150);
+	//recoverPass.setMaxWidth(150);
 	
 	centerMenu.setPadding(new Insets(20, 40, 0, 40));
 	centerMenu.setAlignment(Pos.CENTER);

@@ -13,8 +13,8 @@ import javafx.geometry.Pos;
 import Database.DatabaseConnector;
 
 public class ForgotPassword {
-	public static String currentUser = "";
-
+	//public static String currentUser = "";
+	static String str = "";
 	public static void display(String title, String message) {
 		Stage window = new Stage();
 		
@@ -31,15 +31,20 @@ public class ForgotPassword {
 		
 		Button getSecQuest = new Button("Get Security Question");
 		getSecQuest.setOnAction(e -> {
-			currentUser = txtName.getText();
+			Person p =  new Person(txtName.getText());
+			Data data = new Data();
+			data.setPerson(p);
 			DatabaseConnector obj = new DatabaseConnector();
 			try {
-			AlertBox.display("Your security question is:", 
-					obj.getSecurityQuestion(currentUser));
+				str = obj.getSecurityQuestion(data);
+				AlertBox.display("Your security question is:", str);
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
 			}
-			catch (Exception ex) {
-				System.out.println("Something went wrong");
-			}
+		
+			
+			
 		});
 		getSecQuest.setMaxWidth(150);
 		
@@ -51,14 +56,17 @@ public class ForgotPassword {
 		
 		Button submitButton = new Button("Submit");
 		submitButton.setOnAction(e -> {
-				currentUser = txtName.getText();
+				Person c =  new Person(txtName.getText());
 				DatabaseConnector obj = new DatabaseConnector();
+				Data data = new Data();
+				data.setPerson(c);
 				try {
 				AlertBox.display("Your password is:", 
-						obj.getPassword(currentUser));
+						obj.getPassword(data));
 				}
 				catch (Exception ex) {
 					System.out.println("Something went wrong");
+					
 				}
 				});
 		submitButton.setMaxWidth(150);

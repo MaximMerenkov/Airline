@@ -227,7 +227,7 @@ public class AdminChoice extends Application {
 	    		DatabaseConnector obj = new DatabaseConnector();
 	    		try {
 					obj.addBooking(dat);
-				} catch (SQLException e1) {
+				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
@@ -279,6 +279,26 @@ public class AdminChoice extends Application {
 	        Button updateButton = new Button("Update Flight");
 	        updateButton.setMaxWidth(200);
 	        GridPane.setConstraints(updateButton, 1, 12);
+	        updateButton.setOnAction(e -> {
+	        	if(flightIdTxt.getText().isEmpty() || depCity.getValue().isEmpty() || lbl.getText().isEmpty()
+	        			|| depTime.getValue().isEmpty() || arrCity.getValue().isEmpty() 
+	        			|| basePrice.getText().isEmpty() || remSeats.getText().isEmpty() ) {
+	        		AlertBox.display("WARNING", "Please set all fields to update the flight");
+	        	}
+	        	Flight update = new Flight(Integer.parseInt(flightIdTxt.getText()), depCity.getValue(), lbl.getText(),
+                        depTime.getValue(), arrCity.getValue(), basePrice.getText(),
+                        Integer.parseInt(remSeats.getText()));
+	        	Data wrapper = new Data();
+	        	wrapper.setFlight(update);
+	        	DatabaseConnector obj = new DatabaseConnector();
+	        	try {
+					obj.updateFlight(wrapper);
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+	        			
+	        });
 	                    
 	        Button backButton = new Button("Main menu");
 	        backButton.setMaxWidth(200);

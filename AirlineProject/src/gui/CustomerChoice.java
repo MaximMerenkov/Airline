@@ -115,7 +115,7 @@ public class CustomerChoice extends Application {
 	        
 	        ComboBox<String> depCity = new ComboBox<>();
 	        depCity.setMaxWidth(100);
-	    	depCity.getItems().addAll("Atlanta", "Boston", "Miami", "Sochi");
+	    	depCity.getItems().addAll("Atlanta", "Boston", "Miami", "Sochi", "Rome", "Paris", "Dubai", "New York");
 	    	depCity.setPromptText("From");
 	    	
 	    	Text findFlightText = new Text("Find your flight");
@@ -130,7 +130,7 @@ public class CustomerChoice extends Application {
 	    	
 	    	ComboBox<String> arrCity = new ComboBox<>();
 	    	arrCity.setMaxWidth(100);
-	    	arrCity.getItems().addAll("Moscow", "Miami", "Boston", "Atlanta");
+	    	arrCity.getItems().addAll("Moscow", "Miami", "Boston", "Atlanta", "Rome", "Paris", "Dubai");
 	    	arrCity.setPromptText("To");
 	    	Label lbl = new Label();
 	    	DatePicker dp = new DatePicker();
@@ -181,19 +181,24 @@ public class CustomerChoice extends Application {
 	        bookButton.setMaxWidth(200);
 	        
 	        bookButton.setOnAction(e -> {
+	      	        	
 	        	Flight selectedFlight = (Flight) table1.getSelectionModel().getSelectedItem();
 	        	Data dat = new Data();
 	    		dat.setFlight(selectedFlight);
-	    		System.out.println(selectedFlight.getFlightId());
+	    		if(dat.getFlight().getAvailableSeats() == 0) {
+	    			AlertBox.display("SORRY", "This flight is fully booked");
+	    		}
+	    		//System.out.println(selectedFlight.getFlightId());
 	    		
 	    		DatabaseConnector obj = new DatabaseConnector();
-	    		try {
+	    		
+				try {
 					obj.addBooking(dat);
-				} catch (SQLException e1) {
+				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-	    		
+				
 	    		
 	        	
 	        });

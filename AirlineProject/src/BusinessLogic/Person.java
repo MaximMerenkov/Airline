@@ -17,8 +17,8 @@ public class Person {
 		
 	}
 	
-	public Person(String username) {
-		
+	public Person(String userName) {
+		this.userName = userName;
 	}
 	
 	public Person(String userName, String password) {

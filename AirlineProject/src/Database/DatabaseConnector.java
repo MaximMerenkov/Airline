@@ -258,11 +258,8 @@ public class DatabaseConnector {
 
 		
 
-		
-
-
 	
-    public static void addBooking(Data data) throws SQLException {
+    public static void addBooking(Data data) throws Exception {
 	
 	String databaseURL = "jdbc:mysql://localhost:3306/project?autoReconnect=true&useSSL=false";
 	String databaseUser = "root";
@@ -285,9 +282,8 @@ public class DatabaseConnector {
 		String sqlQuery = "INSERT INTO confirmedbookings ( flightId, username) VALUES(?, ?)";
 		String seatUpdate = "UPDATE flight SET availableSeats = ? WHERE flightId = ?";
 		PreparedStatement statement = connection.prepareStatement(sqlQuery);
+		
 		statement.setInt(1, data.getFlight().getFlightId()); 
-		
-		
 		statement.setString(2, AirlineLogin.currentUser);
 		System.out.println("booking works");
 		
@@ -303,9 +299,33 @@ public class DatabaseConnector {
 		else {
 			AlertBox.display("SORRY", "You can't book the same flight twice");
 		}
+    }	
+	
+    //Admin choice update flight info
+		public static void updateFlight(Data data)  throws Exception {
+			
+			String databaseURL = "jdbc:mysql://localhost:3306/project?autoReconnect=true&useSSL=false";
+			String databaseUser = "root";
+			String databasePass = "Westsmyrna-2020";
+			
+			Connection connection = DriverManager.getConnection(databaseURL, databaseUser, databasePass);
+			String sqlQuery = "UPDATE flight SET departureCity = ? AND departureDate = ? AND departureTime = ? "
+					                     + "AND arrivalCity = ? AND basicPrice = ? AND availableSeats = ?  WHERE flightId = ?";
+			
+			PreparedStatement statement = connection.prepareStatement(sqlQuery);
+			statement.setString(1, data.getFlight().getDepartureCity());
+			statement.setString(2, data.getFlight().getDepartureDate());
+			statement.setString(3, data.getFlight().getDepartureTime());
+			statement.setString(4, data.getFlight().getArrivalCity());
+			statement.setString(5, data.getFlight().getBasicPrice());
+			statement.setInt(6, data.getFlight().getAvailableSeats());
+			statement.setInt(7, data.getFlight().getFlightId());
+			statement.executeUpdate();
+			connection.close();
+		}
 		
-}
-public static void deleteBooking(Data data) throws Exception {
+
+    public static void deleteBooking(Data data) throws Exception {
 	String databaseURL = "jdbc:mysql://localhost:3306/project?autoReconnect=true&useSSL=false";
 	String databaseUser = "root";
 	String databasePass = "Westsmyrna-2020";
@@ -341,7 +361,7 @@ public static void deleteBooking(Data data) throws Exception {
 		connection.close();
 }
 
-public static void deleteFlight(Data data) throws Exception {
+    public static void deleteFlight(Data data) throws Exception {
     String databaseURL = "jdbc:mysql://localhost:3306/project?autoReconnect=true&useSSL=false";
     String databaseUser = "root";
     String databasePass = "Westsmyrna-2020";
@@ -385,18 +405,18 @@ public static void deleteFlight(Data data) throws Exception {
     	connection.close();
 }
 
-public static String getSecurityQuestion(String userName) throws Exception {
+    public static  String getSecurityQuestion(Data data) throws Exception {
 	String databaseURL = "jdbc:mysql://localhost:3306/project?autoReconnect=true&useSSL=false";
 	String databaseUser = "root";
 	String databasePass = "Westsmyrna-2020";
 	
 	Connection connection = DriverManager.getConnection(databaseURL, databaseUser, databasePass);
 	
-	String secQuest = "";
+	String secQuest = "" ;
 	
 	String sqlQuery = "SELECT question FROM users WHERE username = ?";
 	PreparedStatement pStatement = connection.prepareStatement(sqlQuery);
-	pStatement.setString(1, userName);
+	pStatement.setString(1, data.getPerson().getUserName());
 	ResultSet rs = pStatement.executeQuery();
 	while (rs.next()) {
 		secQuest = rs.getString("question");
@@ -408,7 +428,7 @@ public static String getSecurityQuestion(String userName) throws Exception {
 	return secQuest;
 }
 
-public static String getPassword(String userName) throws Exception {
+    public static String getPassword(Data data) throws Exception {
 	String databaseURL = "jdbc:mysql://localhost:3306/project?autoReconnect=true&useSSL=false";
 	String databaseUser = "root";
 	String databasePass = "Westsmyrna-2020";
@@ -419,7 +439,7 @@ public static String getPassword(String userName) throws Exception {
 	
 	String sqlQuery = "SELECT password FROM users WHERE username = ?";
 	PreparedStatement pStatement = connection.prepareStatement(sqlQuery);
-	pStatement.setString(1, userName);
+	pStatement.setString(1, data.getPerson().getUserName());
 	ResultSet rs = pStatement.executeQuery();
 	while (rs.next()) {
 		userPass = rs.getString("password");

@@ -106,13 +106,25 @@ public class BookedFlights extends Application {
 	    	Button backButton = new Button("GO back");
 	    	backButton.setMaxWidth(150);
 	    	backButton.setOnAction(e  ->{
-	    		CustomerChoice ch = new CustomerChoice();
+	    		DatabaseConnector obj = new DatabaseConnector();
+	    		if(AirlineLogin.currentUser.equalsIgnoreCase("admin1")) {
+	    		AdminChoice ach = new AdminChoice();
 	    		try {
-					ch.start(primaryStage);
+					ach.start(primaryStage);
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
+	    		}
+	    		else {
+	    			CustomerChoice ch1 = new CustomerChoice();
+	    			try {
+						ch1.start(primaryStage);
+					} catch (Exception e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+	    		}
 	    	});
 	        
 	        VBox bookedBox = new VBox();
